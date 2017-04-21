@@ -1,0 +1,17 @@
+from socket import *
+
+sock=socket(AF_INET,SOCK_STREAM)
+port=9000
+ip="localhost"
+a=""
+sock.connect((ip,port))
+while True:
+ a=input("Cka deshironi te beni(Formati:Emri i komandes,hapesire,numri):")
+ sock.send(a.encode("ASCII"))
+ message=sock.recv(1024).decode("ASCII")
+ if(message=="exit" or message=="0"):
+  print("u disconcetuat")
+  break
+ print(message)
+sock.close()
+print("Lidhja u mbyll") 
