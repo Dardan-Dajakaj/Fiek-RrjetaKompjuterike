@@ -1,0 +1,170 @@
+from socket import *
+from datetime import datetime
+from random import random
+
+
+
+
+def faktoriel(a):
+ h=1;
+ num=int(a[0])
+ if(num==0):
+  return 1
+ elif(num>0):
+  for x in range(num):
+   h=h*(x+1)
+ else:
+  return "Numrat negativ nuk kane faktoriel" 
+ return h
+
+def shuma(sum):
+   s=0;
+   num=int(sum[0])
+   for i in range(num):
+     s=s+(i+1)
+   return s
+    
+
+def truefalse(numer):
+    for element in numer:
+        if element:
+            return True
+    return False
+
+def keno(u=0):
+ arr=[]
+ for x in range(20):
+  arr.append(int((100*random())%80))
+ return str(arr)[1:-1] 
+ 
+
+
+def zanore(z=""):
+ z=''.join(z)   
+ a=['a','e','i','o','u','y','A','E','I','O','U','Y']
+ num=0;
+ if(z==""):
+     return 0
+ else:
+  sli=list(z)
+  for x in a:
+   num=num+sli.count(x)
+ return num  
+
+def bashtingellore(b=""): 
+ b=''.join(b)
+ var=['b','B','c','d','D','f','F','g','G','h','H','j','J','k','K','l'] 
+ var1=['L','m','M','n','N','p','P','q','Q','r','R','s','S','t','T','v','V','x','X','z','Z']
+ num=0;
+ if(b==""):
+    return 0
+ else:
+  li=list(b)
+  for y in var+var1:
+   num=num+li.count(y)
+ return num
+
+
+
+def printo(text=''):
+ text=''.join(text)
+ if(text==""):
+  return ""
+ else:
+  return text
+
+def time(d=0):
+ return str(datetime.now())[:-7]
+
+
+ 
+def konverto(a):
+ num=float(a[1])
+ if(a[0].upper()=="KELVINTOCELCIUS"):
+   return num-273.16 
+ elif(a[0].upper()=="CELCIUSTOKELVIN"):
+   return num+273.16
+ elif(a[0].upper()=="FARENHAJTTOCELCIUS"):
+   return (num-32)*5/9
+ elif(a[0].upper()=="CELCIUSTOFARENHAJT"):
+   return (num*9/5)+32
+ elif(a[0].upper()=="FARENHAJTTOKELVIN"):
+   g=num-32
+   c=5/9
+   gc=g*c
+   return gc+273.16
+ elif(a[0].upper()=="KELVINTOFARENHAJT"):
+   g=num-273.16
+   j=9/5
+   gj=g*j
+   return  gj+32
+ else:
+  return "Parametrat ose nenkomanda gabim!"
+
+def veksum(f=""):
+
+    vekA=([1,3,8])
+    vekB=([5,29,9])
+
+    sum=0
+    i=0
+    while(i<len(vekA)):
+        sum=sum+vekA[i]+vekB[i]
+        i=i+1
+    return sum 
+ 
+def sort(g=""):
+    mylist=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    myorder=[3,0,17,3,0,13]
+    mylist = [ mylist[i] for i in myorder]
+    print ("Reordered list" +str(mylist))
+    return mylist
+
+def port(x=""):
+    porti=str(clientAddress[1])
+    return porti
+
+def ip(y=""):
+    ipja=str(clientAddress[0])
+    return ipja
+
+dict={"KONVERTO":konverto,'PRINTO':printo,"TRUEFALSE":truefalse,"ZANORE":zanore,"FAKTORIEL":faktoriel,"TIME":time,"KENO":keno,"BASHTINGELLORE":bashtingellore,"SHUMA":shuma,"VEKSUM":veksum,"SORT":sort,"PORT":port,"IP":ip}
+def serv(adresa):
+ mesazhid="Kerkesa deshtoi!"
+ 
+ try:
+  if(com.upper()=="PORT"):
+   mesazhid=str(adresa[1])   
+   serverSocket.sendto(mesazhid.encode("ASCII"), adresa)
+   return
+  elif(com.upper()=="HOST"):
+   mesazhid=str(adresa[0])
+   serverSocket.sendto(mesazhid.encode("ASCII"), adresa)
+   return
+  else: 
+   mesazhid=str(dict[com.upper()](par))
+ except NameError:
+  mesazhid="Komanda e shkruar gabim!"
+ except TypeError:
+  mesazhid="Parametrat e dhene gabim!\n Ju lutem kontrolloni parametrat\n "
+ except Exception:
+  mesazhid="Komanda ose parametrat gabim\n\nSintaksa e kerkeses eshte:\nKOMANDA,NENKOMANDA NESE EKZISTON, PARAMETRI/AT\n sigurohuni qe parametrat i korespondojn komandave"   
+ finally:
+  print("mesazhi i derguar: "+mesazhid)
+ serverSocket.sendto(mesazhid.encode("ASCII"), adresa) 
+  
+
+serverPort=9000
+serverSocket=socket(AF_INET,SOCK_DGRAM)
+serverSocket.bind(('',serverPort))
+print("Serveri eshte i gatshem")
+while True:
+ message,clientAddress=serverSocket.recvfrom(1028)
+ print("Mesazhi i pranuar: " + message.decode("ASCII"))
+ comarr=message.decode("ASCII").split(" ")
+ com=comarr[0]
+ par=comarr[1:]
+ serv(clientAddress)
+
+
+  
