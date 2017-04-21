@@ -1,0 +1,15 @@
+from socket import *
+
+sock=socket(AF_INET,SOCK_DGRAM)
+port=9000
+ip="localhost"
+a=""
+while True:
+ a=input("Shtype komanden: ")
+ if(a=='0'):
+  break
+ sock.sendto(a.encode("ASCII"),(ip,port))
+ message,sockadd=sock.recvfrom(1024)
+ print("Mesazhi nga komanda e shtypur:"+message.decode("ASCII")+"\n\n")
+print("Soketa u mbyll") 
+sock.close()
